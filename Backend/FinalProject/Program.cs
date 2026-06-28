@@ -203,13 +203,13 @@ options.SuppressModelStateInvalidFilter = true;
             }
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
+            //if (app.Environment.IsDevelopment())
+            //{
                 app.UseSwagger();
                 app.UseSwaggerUI();
-            }
+            //}
             //app.UseHttpsRedirection();
-
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -228,6 +228,7 @@ options.SuppressModelStateInvalidFilter = true;
             {
                 Authorization = new[] { new Hangfire.Dashboard.LocalRequestsOnlyAuthorizationFilter() }
             });
+            app.MapFallbackToFile("index.html");
             app.Run();
         }
     }

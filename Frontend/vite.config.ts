@@ -14,16 +14,16 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://localhost:5008',
+        target: 'https://ather.runasp.net',
         changeOrigin: true,
       },
       '/chathub': {
-        target: 'http://localhost:5008',
+        target: 'https://ather.runasp.net',
         changeOrigin: true,
         ws: true,
       },
       '/notificationhub': {
-        target: 'http://localhost:5008',
+        target: 'https://ather.runasp.net',
         changeOrigin: true,
         ws: true,
       },
