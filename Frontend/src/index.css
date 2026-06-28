@@ -1,0 +1,431 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   ATHER — DESIGN TOKEN SYSTEM
+   Egyptian tourism · 80% neutral · 15% Nile blue · 5% Pharaonic gold
+   Light + dark modes share the same semantic token names.
+   ============================================================================ */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* ─────────── PRIMITIVE COLOR SCALES ─────────── */
+
+  /* Nile blue — primary brand (used for CTAs, links, focus) */
+  --color-primary-50:  #f0f9ff;
+  --color-primary-100: #e0f2fe;
+  --color-primary-200: #bae6fd;
+  --color-primary-300: #7dd3fc;
+  --color-primary-400: #38bdf8;
+  --color-primary-500: #0ea5e9;
+  --color-primary-600: #0284c7;
+  --color-primary-700: #0369a1;
+  --color-primary-800: #075985;
+  --color-primary-900: #0c4a6e;
+  --color-primary-950: #082f49;
+
+  /* Pharaonic gold — rare accent (ratings, premium badges, highlights) */
+  --color-gold-50:  #fefce8;
+  --color-gold-100: #fef9c3;
+  --color-gold-200: #fde68a;
+  --color-gold-300: #fcd34d;
+  --color-gold-400: #fbbf24;
+  --color-gold-500: #f59e0b;
+  --color-gold-600: #d97706;
+  --color-gold-700: #b45309;
+  --color-gold-800: #92400e;
+  --color-gold-900: #78350f;
+
+  /* Sandstone — warm secondary, used for "earthy" surfaces and tags */
+  --color-sand-50:  #fbf8f1;
+  --color-sand-100: #f4ead4;
+  --color-sand-200: #ead4a3;
+  --color-sand-300: #ddb56b;
+  --color-sand-400: #c4974b;
+  --color-sand-500: #a87c34;
+  --color-sand-600: #8b6225;
+  --color-sand-700: #6e4d1c;
+  --color-sand-800: #523914;
+  --color-sand-900: #3a2a14;
+
+  /* Nile-night — deep charcoal used in dark mode surfaces */
+  --color-night-50:  #f2f4f6;
+  --color-night-100: #e0e3e8;
+  --color-night-200: #b9bec6;
+  --color-night-300: #878d99;
+  --color-night-400: #525860;
+  --color-night-500: #3e4349;
+  --color-night-600: #31353d;
+  --color-night-700: #272b33;
+  --color-night-800: #22262d;
+  --color-night-900: #1b1e23;
+  --color-night-950: #131619;
+
+  /* Status colors (kept neutral & semantic — never used as brand) */
+  --color-success-500: #10b981;
+  --color-success-600: #059669;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+  --color-danger-500:  #ef4444;
+  --color-danger-600:  #dc2626;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+
+  --shadow-soft:     0 1px 2px 0 rgb(15 23 42 / 0.06), 0 1px 3px 0 rgb(15 23 42 / 0.08);
+  --shadow-elevated: 0 10px 30px -10px rgb(15 23 42 / 0.18), 0 4px 8px -4px rgb(15 23 42 / 0.08);
+}
+
+/* ============================================================================
+   SEMANTIC TOKENS (the public API of the design system)
+   Always reference these in components, not the primitive scales.
+   ============================================================================ */
+
+@layer base {
+  :root {
+    color-scheme: light;
+
+    /* Surfaces — 80% neutral */
+    --bg-canvas:        #fbfaf7;   /* page background, very subtle warm cream */
+    --bg-surface:       #ffffff;   /* cards, navbar */
+    --bg-surface-2:     #f5f0e6;   /* sandstone-tinted secondary surface */
+    --bg-surface-raised:#ffffff;   /* modals, popovers */
+    --bg-muted:         #f1f5f9;   /* skeletons, inactive chips */
+
+    /* Text */
+    --text-primary:   #0f172a;
+    --text-secondary: #475569;
+    --text-muted:     #94a3b8;
+    --text-inverse:   #ffffff;
+    --text-on-primary:#ffffff;
+    --text-on-accent: #422006;     /* dark on gold for AA contrast */
+
+    /* Borders */
+    --border-subtle:  #f1f5f9;
+    --border-default: #e2e8f0;
+    --border-strong:  #cbd5e1;
+
+    /* Brand — primary (Nile) */
+    --brand:            var(--color-primary-700);
+    --brand-hover:      var(--color-primary-800);
+    --brand-pressed:    var(--color-primary-900);
+    --brand-soft:       var(--color-primary-50);   /* tinted bg for primary chips */
+    --brand-soft-text:  var(--color-primary-800);
+    --brand-ring:       color-mix(in oklab, var(--color-primary-500) 35%, transparent);
+
+    /* Accent — gold (5% only) */
+    --accent:           var(--color-gold-500);
+    --accent-hover:     var(--color-gold-600);
+    --accent-soft:      var(--color-gold-50);
+    --accent-soft-text: var(--color-gold-800);
+    --accent-ring:      color-mix(in oklab, var(--color-gold-400) 40%, transparent);
+
+    /* States */
+    --success: var(--color-success-600);
+    --warning: var(--color-warning-600);
+    --danger:  var(--color-danger-600);
+
+    /* Effects */
+    --shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.05);
+    --shadow-md: 0 4px 12px -2px rgb(15 23 42 / 0.08), 0 2px 4px -2px rgb(15 23 42 / 0.04);
+    --shadow-lg: 0 20px 40px -16px rgb(15 23 42 / 0.18), 0 8px 16px -8px rgb(15 23 42 / 0.10);
+    --shadow-glow-primary: 0 0 0 1px rgb(56 189 248 / 0.18), 0 12px 32px -12px rgb(2 132 199 / 0.45);
+    --shadow-glow-gold:    0 0 0 1px rgb(245 158 11 / 0.20), 0 12px 32px -12px rgb(217 119 6 / 0.45);
+
+    /* Radii */
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-2xl: 28px;
+    --radius-pill: 9999px;
+
+    /* Hero gradient — Nile + gold (used once, on landing) */
+    --gradient-hero:
+      radial-gradient(ellipse at 70% 0%, rgb(56 189 248 / 0.25), transparent 60%),
+      radial-gradient(ellipse at 20% 100%, rgb(245 158 11 / 0.18), transparent 55%),
+      linear-gradient(135deg, var(--color-primary-900), var(--color-night-900));
+    --gradient-brand:  linear-gradient(135deg, var(--color-primary-700), var(--color-primary-500));
+    --gradient-gold:   linear-gradient(135deg, var(--color-gold-400), var(--color-gold-600));
+  }
+
+  /* Dark mode — Deeper charcoal base #0D0F12 */
+  .dark {
+    color-scheme: dark;
+
+    /* Darkened Surfaces */
+    --bg-canvas:         #0d0f12;   /* main page background, darker charcoal */
+    --bg-surface:        #15181d;   /* cards, navbar */
+    --bg-surface-2:      #111317;   /* secondary surface */
+    --bg-surface-raised: #1b1e23;   /* modals, popovers */
+    --bg-muted:          #13161a;   /* skeletons, inactive chips */
+
+    --text-primary:    #ffffff;
+    --text-secondary:  #d4d8de;
+    --text-muted:      #9ca2aa;
+    --text-inverse:    #0d0f12;     /* Adjusted to match new darker canvas */
+    --text-on-primary: #ffffff;
+    --text-on-accent:  #1a1305;
+
+    /* Darkened Borders */
+    --border-subtle:  #1d2127;
+    --border-default: #262b33;
+    --border-strong:  #333a45;
+
+    /* Brand brightens in dark for AA contrast */
+    --brand:            var(--color-primary-400);
+    --brand-hover:      var(--color-primary-300);
+    --brand-pressed:    var(--color-primary-500);
+    --brand-soft:       color-mix(in oklab, var(--color-primary-500) 14%, transparent);
+    --brand-soft-text:  var(--color-primary-200);
+    --brand-ring:       color-mix(in oklab, var(--color-primary-400) 45%, transparent);
+
+    --accent:           var(--color-gold-400);
+    --accent-hover:     var(--color-gold-300);
+    --accent-soft:      color-mix(in oklab, var(--color-gold-400) 14%, transparent);
+    --accent-soft-text: var(--color-gold-200);
+    --accent-ring:      color-mix(in oklab, var(--color-gold-300) 45%, transparent);
+
+    --success: var(--color-success-500);
+    --warning: var(--color-warning-500);
+    --danger:  var(--color-danger-500);
+
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.45);
+    --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.55), 0 2px 4px -2px rgb(0 0 0 / 0.40);
+    --shadow-lg: 0 20px 40px -16px rgb(0 0 0 / 0.75), 0 8px 16px -8px rgb(0 0 0 / 0.50);
+    
+    /* Soft glowing highlights on dark — the "luxury" effect */
+    --shadow-glow-primary: 0 0 0 1px rgb(56 189 248 / 0.28), 0 16px 40px -12px rgb(56 189 248 / 0.40);
+    --shadow-glow-gold:    0 0 0 1px rgb(250 204 21 / 0.30), 0 16px 40px -12px rgb(250 204 21 / 0.30);
+
+    --gradient-hero:
+      radial-gradient(ellipse at 75% 0%, rgb(56 189 248 / 0.20), transparent 60%),
+      radial-gradient(ellipse at 15% 110%, rgb(250 204 21 / 0.12), transparent 55%),
+      linear-gradient(180deg, var(--color-night-950), #0d0f12);
+  }
+
+  html {
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--bg-canvas);
+    color: var(--text-primary);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    /* Smooth transition on theme switch */
+    transition: background-color 250ms ease, color 250ms ease;
+  }
+  body, button, input, textarea, select { font-family: var(--font-sans); }
+
+  h1, h2, h3, h4 { @apply font-bold tracking-tight; color: var(--text-primary); }
+  h1 { @apply text-3xl sm:text-4xl lg:text-5xl; line-height: 1.05; letter-spacing: -0.02em; }
+  h2 { @apply text-2xl sm:text-3xl leading-snug; letter-spacing: -0.01em; }
+  h3 { @apply text-xl sm:text-2xl leading-snug; }
+  p  { @apply leading-relaxed; }
+
+  *:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--brand) 30%, transparent);
+    color: var(--text-primary);
+  }
+
+  hr { border-color: var(--border-subtle); }
+  a  { color: var(--brand); text-decoration: none; }
+  a:hover { color: var(--brand-hover); }
+
+  /* Scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
+  }
+  *::-webkit-scrollbar { width: 8px; height: 8px; }
+  *::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; }
+  *::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+}
+
+/* ============================================================================
+   UTILITY LAYER — semantic helpers reused across components
+   ============================================================================ */
+
+@layer utilities {
+  /* Layout */
+  .container-app { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+  .section-py    { @apply py-8 sm:py-10 lg:py-14; }
+
+  /* Adaptive surfaces — the most important class in the system */
+  .surface {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 200ms ease, transform 200ms ease, border-color 200ms ease;
+  }
+  .surface-2 { background-color: var(--bg-surface-2); border-radius: var(--radius-lg); }
+  .surface-hover:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    border-color: var(--border-default);
+  }
+
+  /* Text helpers (use these — they auto-adapt to dark mode) */
+  .text-app           { color: var(--text-primary); }
+  .text-secondary-app { color: var(--text-secondary); }
+  .text-muted         { color: var(--text-muted); }
+  .border-app         { border-color: var(--border-default); }
+  .border-subtle      { border-color: var(--border-subtle); }
+  .bg-app             { background-color: var(--bg-canvas); }
+  .bg-surface         { background-color: var(--bg-surface); }
+  .bg-surface-2       { background-color: var(--bg-surface-2); }
+  .bg-muted-app       { background-color: var(--bg-muted); }
+
+  /* Brand text */
+  .text-brand   { color: var(--brand); }
+  .text-accent  { color: var(--accent); }
+  .bg-brand     { background-color: var(--brand); color: var(--text-on-primary); }
+  .bg-brand-soft { background-color: var(--brand-soft); color: var(--brand-soft-text); }
+  .bg-accent-soft { background-color: var(--accent-soft); color: var(--accent-soft-text); }
+
+  /* Glow effects — used very sparingly */
+  .glow-primary { box-shadow: var(--shadow-glow-primary); }
+  .glow-gold    { box-shadow: var(--shadow-glow-gold); }
+
+  /* Brand gradients — for hero and rare premium accents */
+  .text-gradient {
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-gold-400));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient-gold {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .bg-hero { background-image: var(--gradient-hero); }
+
+  /* Divider with subtle gold tick (the "ankh thread") */
+  .divider-app {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-default), transparent);
+  }
+
+  /* Story rings */
+  .story-ring {
+    background: linear-gradient(135deg, #f87171 0%, #ef4444 40%, #dc2626 70%, #991b1b 100%);
+    padding: 3px;
+    border-radius: 9999px;
+  }
+  .story-ring--viewed {
+    background: var(--border-strong);
+    padding: 3px;
+    border-radius: 9999px;
+  }
+
+  /* Skeleton shimmer */
+  .skeleton {
+    background: linear-gradient(90deg, var(--bg-muted) 0%, var(--bg-surface-2) 50%, var(--bg-muted) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.6s ease-in-out infinite;
+    border-radius: var(--radius-md);
+  }
+
+  /* Animations */
+  .animate-slide-in   { animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .animate-slide-up   { animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .animate-fade-in    { animation: fadeIn 0.4s ease-out both; }
+  .animate-scale-in   { animation: scaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .animate-pulse-soft { animation: pulseSoft 2.5s ease-in-out infinite; }
+
+  @keyframes slideIn   { from { opacity: 0; transform: translateY(1rem); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideUp   { from { opacity: 0; transform: translateY(1.5rem); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn    { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes scaleIn   { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+  @keyframes shimmer   { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+  @keyframes pulseSoft { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+  .scrollbar-hide              { -ms-overflow-style: none; scrollbar-width: none; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+
+  /* iOS safe-area bottom padding (MobileNav needs this) */
+  .safe-area-pb { padding-bottom: max(env(safe-area-inset-bottom), 0px); }
+
+  /* Hero card — shared on landing, placed inside container so it has visible margins */
+  .hero-card {
+    border-radius: 2rem;
+    overflow: hidden;
+    box-shadow: 0 30px 90px -20px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(255,255,255,0.06);
+  }
+
+  /* Gold shimmer — thin glowing line used as section accents */
+  .gold-rule {
+    height: 2px;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, transparent, var(--color-gold-400), transparent);
+  }
+
+  /* Egyptian section label — small uppercase overline above headings */
+  .section-label {
+    font-size: 0.6875rem;        /* 11px */
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-primary-600);
+  }
+
+  /* Hover-lift card shorthand */
+  .card-lift {
+    transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
+  }
+  .card-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  @keyframes goldPulse {
+    0%, 100% { opacity: 0.7; }
+    50%       { opacity: 1; }
+  }
+  .animate-gold-pulse { animation: goldPulse 2.5s ease-in-out infinite; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* ── Dark mode safety net ──
+     Catches hardcoded Tailwind slate/gray classes that don't have dark: variants.
+     Applied last so they override component-level slate utilities. */
+  .dark .text-slate-900,
+  .dark .text-slate-800 { color: #ffffff; }
+  .dark .text-slate-700 { color: var(--text-primary); }
+  .dark .text-slate-600 { color: var(--text-secondary); }
+  .dark .text-slate-500 { color: var(--text-secondary); }
+  .dark .text-slate-400 { color: var(--text-muted); }
+  .dark .text-slate-300 { color: var(--text-muted); }
+
+  .dark .bg-white        { background-color: var(--bg-surface); }
+  .dark .bg-slate-50     { background-color: var(--bg-surface-2); }
+  .dark .bg-slate-100    { background-color: var(--bg-muted); }
+  .dark .bg-slate-200    { background-color: var(--bg-muted); }
+  .dark .bg-primary-50   { background-color: var(--brand-soft); }
+  .dark .bg-primary-100  { background-color: var(--brand-soft); }
+  .dark .border-slate-100,
+  .dark .border-slate-200 { border-color: var(--border-subtle); }
+  .dark .border-slate-300 { border-color: var(--border-default); }
+  .dark .border-primary-100,
+  .dark .border-primary-200 { border-color: var(--brand-ring); }
+}

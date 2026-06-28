@@ -1,0 +1,30 @@
+# .NET
+bin/
+obj/
+publish/
+.vs/
+wwwroot/
+
+# Config / secrets
+.env
+appsettings*.json
+
+# Visual Studio / VS Code
+.vscode/
+*.user
+*.suo
+.idea/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Frontend
+node_modules/
+dist/
+.vite/
+node_modules/.vite/
+*.mp4
