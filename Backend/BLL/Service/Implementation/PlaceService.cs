@@ -279,10 +279,10 @@ namespace BLL.Service.Implementation
             var place = await _unitOfWork.Places.GetByIdAsync(placeId);
             await _unitOfWork.PlacePhotos.AddAsync(photo);
             await _unitOfWork.CompleteAsync();
-            await _interactionService.AddInteractionAsync(
-                userId,
-                place.IdFromModel,
-                "favorite");
+            //await _interactionService.AddInteractionAsync(
+            //    userId,
+            //    place.IdFromModel,
+            //    "favorite");
             return true;
         }
 

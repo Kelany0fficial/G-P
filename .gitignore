@@ -3,11 +3,9 @@ bin/
 obj/
 publish/
 .vs/
-wwwroot/
 
 # Config / secrets
 .env
-appsettings*.json
 
 # Visual Studio / VS Code
 .vscode/
